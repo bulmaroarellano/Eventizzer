@@ -1,10 +1,10 @@
 // eslint-disable-next-line
-import * as dataFormat from 'pages/CRUD/Events/table/EventsDataFormatters';
+import * as dataFormat from 'pages/CRUD/Billings/table/BillingsDataFormatters';
 
 // eslint-disable-next-line
-import * as billingsDataFormat from 'pages/CRUD/Billings/table/BillingsDataFormatters';
+import * as customersDataFormat from 'pages/CRUD/Customers/table/CustomersDataFormatters';
 
-import actions from 'actions/events/eventsListActions';
+import actions from 'actions/billings/billingsListActions';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
@@ -41,12 +41,12 @@ import Widget from 'components/Widget';
 
 const { SearchBar } = Search;
 
-const EventsTable = () => {
+const BillingsTable = () => {
   const [filters, setFilters] = React.useState([
-    {label: 'Name', title: 'name'},{label: 'Address', title: 'address'},
+    {label: 'Product', title: 'product'},{label: 'PayForm', title: 'payForm'},
 
-    {label: 'Price', title: 'price', number: 'true'},
-    {label: 'BillingId', title: 'billingId'},
+    {label: 'Price', title: 'price', number: 'true'},{label: 'Amount', title: 'amount', number: 'true'},{label: 'Subtotal', title: 'subtotal', number: 'true'},{label: 'Iva', title: 'iva', number: 'true'},{label: 'Discount', title: 'discount', number: 'true'},{label: 'Total', title: 'total', number: 'true'},
+    {label: 'Client', title: 'client'},
   ]);
   const [filterItems, setFilterItems] = React.useState([]);
   const [currPage, setCurrPage] = React.useState(1);
@@ -54,11 +54,11 @@ const EventsTable = () => {
   const [searchValue, setSearchValue] = React.useState(10);
   const [width, setWidth] = React.useState(window.innerWidth);
 
-  const loading = useSelector((store) => store.events.list.loading);
-  const rows = useSelector((store) => store.events.list.rows);
-  const count = useSelector((store) => store.events.list.count);
-  const modalOpen = useSelector((store) => store.events.list.modalOpen);
-  const idToDelete = useSelector((store) => store.events.list.idToDelete);
+  const loading = useSelector((store) => store.billings.list.loading);
+  const rows = useSelector((store) => store.billings.list.rows);
+  const count = useSelector((store) => store.billings.list.count);
+  const modalOpen = useSelector((store) => store.billings.list.modalOpen);
+  const idToDelete = useSelector((store) => store.billings.list.idToDelete);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -81,11 +81,11 @@ const EventsTable = () => {
   return (
   <div>
     {null && (
-    <Button color="default" size="xs" onClick={() => dispatch(push(`/admin/events/${cell}`))}>
+    <Button color="default" size="xs" onClick={() => dispatch(push(`/admin/billings/${cell}`))}>
     View
   </Button>
   )}
-  <Button color="info" size="xs" onClick={() => history.push(`/admin/events/${cell}/edit`)}>
+  <Button color="info" size="xs" onClick={() => history.push(`/admin/billings/${cell}/edit`)}>
   Edit
 </Button>
   &nbsp;&nbsp;
@@ -98,26 +98,18 @@ const EventsTable = () => {
 
         const columns = [
 
-{ dataField: "billingId",
+{ dataField: "client",
 sort: true,
 
-  formatter: billingsDataFormat.listFormatter,
+  formatter: customersDataFormat.listFormatter,
 
-text: "BillingId"
+text: "Client"
 },
 
-{ dataField: "date",
+{ dataField: "product",
 sort: true,
 
-  formatter: dataFormat.dateTimeFormatter,
-
-text: "Date"
-},
-
-{ dataField: "name",
-sort: true,
-
-text: "Name"
+text: "Product"
 },
 
 { dataField: "price",
@@ -126,10 +118,40 @@ sort: true,
 text: "Price"
 },
 
-{ dataField: "address",
+{ dataField: "amount",
 sort: true,
 
-text: "Address"
+text: "Amount"
+},
+
+{ dataField: "subtotal",
+sort: true,
+
+text: "Subtotal"
+},
+
+{ dataField: "iva",
+sort: true,
+
+text: "Iva"
+},
+
+{ dataField: "discount",
+sort: true,
+
+text: "Discount"
+},
+
+{ dataField: "total",
+sort: true,
+
+text: "Total"
+},
+
+{ dataField: "payForm",
+sort: true,
+
+text: "PayForm"
 },
 
         {
@@ -239,21 +261,21 @@ text: "Address"
 
         return (
 <div>
-<Widget title={<h4>Events</h4>} collapse close>
+<Widget title={<h4>Billings</h4>} collapse close>
     <div>
         <a
             href={
                 process.env.NODE_ENV === 'production'
-                    ? window.location.origin + '/api-docs/#/Events'
-                    : 'http://localhost:8080/api-docs/#/Events'
+                    ? window.location.origin + '/api-docs/#/Billings'
+                    : 'http://localhost:8080/api-docs/#/Billings'
             }
         >
-            API documentation for events
+            API documentation for billings
         </a>
     </div>
     <br/>
 
-<Link to="/admin/events/new">
+<Link to="/admin/billings/new">
   <button
           className="btn btn-primary"
           type="button"
@@ -380,4 +402,4 @@ Are you sure you want to delete this item?
   )
 }
 
-export default EventsTable;
+export default BillingsTable;

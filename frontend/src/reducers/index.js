@@ -6,6 +6,8 @@ import layout from 'reducers/layout';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
+import billings from 'reducers/billings/billingsReducers';
+
 import menu from 'reducers/menu/menuReducers';
 
 import orders from 'reducers/orders/ordersReducers';
@@ -29,6 +31,8 @@ export default (history) =>
     alerts,
     auth,
     navigation,
+
+    billings,
 
     menu,
 

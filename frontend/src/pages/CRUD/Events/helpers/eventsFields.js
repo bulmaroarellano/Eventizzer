@@ -2,6 +2,10 @@
 const eventsFields = {
 	id: { type: 'id', label: 'ID' },
 
+    billingId: { type: 'relation_one', label: 'BillingId',
+
+    },
+
     date: { type: 'datetime', label: 'Date',
 
     },
@@ -15,10 +19,6 @@ const eventsFields = {
     },
 
     address: { type: 'string', label: 'Address',
-
-    },
-
-    billingId: { type: 'string', label: 'BillingId',
 
     },
 

@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
-  const events = sequelize.define(
-    'events',
+  const billings = sequelize.define(
+    'billings',
     {
       id: {
         type: DataTypes.UUID,
@@ -14,12 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey: true,
       },
 
-date: {
-        type: DataTypes.DATE,
-
-      },
-
-name: {
+product: {
         type: DataTypes.TEXT,
 
       },
@@ -29,7 +24,32 @@ price: {
 
       },
 
-address: {
+amount: {
+        type: DataTypes.DECIMAL,
+
+      },
+
+subtotal: {
+        type: DataTypes.DECIMAL,
+
+      },
+
+iva: {
+        type: DataTypes.DECIMAL,
+
+      },
+
+discount: {
+        type: DataTypes.DECIMAL,
+
+      },
+
+total: {
+        type: DataTypes.DECIMAL,
+
+      },
+
+payForm: {
         type: DataTypes.TEXT,
 
       },
@@ -47,22 +67,22 @@ address: {
     },
   );
 
-  events.associate = (db) => {
+  billings.associate = (db) => {
 
-    db.events.belongsTo(db.billings, {
-      as: 'billingId',
+    db.billings.belongsTo(db.customers, {
+      as: 'client',
       constraints: false,
     });
 
-    db.events.belongsTo(db.users, {
+    db.billings.belongsTo(db.users, {
       as: 'createdBy',
     });
 
-    db.events.belongsTo(db.users, {
+    db.billings.belongsTo(db.users, {
       as: 'updatedBy',
     });
   };
 
-  return events;
+  return billings;
 };
 

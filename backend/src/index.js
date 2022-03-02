@@ -14,6 +14,8 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const authRoutes = require('./routes/auth');
 const fileRoutes = require('./routes/file');
 
+const billingsRoutes = require('./routes/billings');
+
 const menuRoutes = require('./routes/menu');
 
 const ordersRoutes = require('./routes/orders');
@@ -78,6 +80,8 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/file', fileRoutes);
+
+app.use('/api/billings', passport.authenticate('jwt', {session: false}), billingsRoutes);
 
 app.use('/api/menu', passport.authenticate('jwt', {session: false}), menuRoutes);
 

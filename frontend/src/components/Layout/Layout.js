@@ -32,6 +32,10 @@ import BreadCrumbs from '../../components/BreadCrumbs'
 // context
 import { useLayoutState } from '../../context/LayoutContext'
 
+import BillingsFormPage from 'pages/CRUD/Billings/form/BillingsFormPage';
+import BillingsTablePage from 'pages/CRUD/Billings/table/BillingsTablePage';
+import BillingsViewPage from 'pages/CRUD/Billings/page/BillingsViewPage';
+
 import MenuFormPage from 'pages/CRUD/Menu/form/MenuFormPage';
 import MenuTablePage from 'pages/CRUD/Menu/table/MenuTablePage';
 import MenuViewPage from 'pages/CRUD/Menu/page/MenuViewPage';
@@ -92,6 +96,11 @@ function Layout(props) {
 
                     <Route path="/admin/dashboard" component={Dashboard} />
                     <Route path="/admin/user/edit" component={EditUser} />
+
+                    <Route path={"/admin/billings"} exact component={BillingsTablePage} />
+                    <Route path={"/admin/billings/new"} exact component={BillingsFormPage} />
+                    <Route path={"/admin/billings/:id/edit"} exact component={BillingsFormPage} />
+                    <Route path={"/admin/billings/:id"} exact component={BillingsViewPage} />
 
                     <Route path={"/admin/menu"} exact component={MenuTablePage} />
                     <Route path={"/admin/menu/new"} exact component={MenuFormPage} />

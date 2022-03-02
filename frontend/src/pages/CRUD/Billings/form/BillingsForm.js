@@ -21,15 +21,15 @@ import FilesFormItem from 'components/FormItems/items/FilesFormItem';
 import TextAreaFormItem from 'components/FormItems/items/TextAreaFormItem';
 // eslint-disable-next-line no-unused-vars
 
-import eventsFields from 'pages/CRUD/Events/helpers/eventsFields';
+import billingsFields from 'pages/CRUD/Billings/helpers/billingsFields';
 import IniValues from 'components/FormItems/iniValues';
 import PreparedValues from 'components/FormItems/preparedValues';
 import FormValidations from 'components/FormItems/formValidations';
 import Widget from 'components/Widget';
 
-import BillingsSelectItem from 'pages/CRUD/Billings/helpers/BillingsSelectItem';
+import CustomersSelectItem from 'pages/CRUD/Customers/helpers/CustomersSelectItem';
 
-const EventsForm = (props) => {
+const BillingsForm = (props) => {
 
   const {
   isEditing,
@@ -43,15 +43,15 @@ const EventsForm = (props) => {
   } = props;
 
   const iniValues = () => {
-  return IniValues(eventsFields, record || {});
+  return IniValues(billingsFields, record || {});
   }
 
   const formValidations = () => {
-  return FormValidations(eventsFields, record || {});
+  return FormValidations(billingsFields, record || {});
   }
 
   const handleSubmit = (values) => {
-  const { id, ...data } = PreparedValues(eventsFields, values || {});
+  const { id, ...data } = PreparedValues(billingsFields, values || {});
   onSubmit(id, data);
   };
 
@@ -61,8 +61,8 @@ const EventsForm = (props) => {
   }
 
   return isEditing
-  ? 'Edit Events'
-  : 'Add Events';
+  ? 'Edit Billings'
+  : 'Add Billings';
   };
 
   const renderForm = () => (
@@ -75,34 +75,58 @@ const EventsForm = (props) => {
   {(form) => (
   <form onSubmit={form.handleSubmit}>
 
-      <BillingsSelectItem
-      name={'billingId'}
-      schema={eventsFields}
+      <CustomersSelectItem
+      name={'client'}
+      schema={billingsFields}
       showCreate={!modal}
       form={form}
       />
 
-      <DatePickerFormItem
-              name={'date'}
-      schema={eventsFields}
-      showTimeInput
-      />
-
       <InputFormItem
-              name={'name'}
-      schema={eventsFields}
+              name={'product'}
+      schema={billingsFields}
 
       />
 
       <InputFormItem
               name={'price'}
-      schema={eventsFields}
+      schema={billingsFields}
 
       />
 
       <InputFormItem
-              name={'address'}
-      schema={eventsFields}
+              name={'amount'}
+      schema={billingsFields}
+
+      />
+
+      <InputFormItem
+              name={'subtotal'}
+      schema={billingsFields}
+
+      />
+
+      <InputFormItem
+              name={'iva'}
+      schema={billingsFields}
+
+      />
+
+      <InputFormItem
+              name={'discount'}
+      schema={billingsFields}
+
+      />
+
+      <InputFormItem
+              name={'total'}
+      schema={billingsFields}
+
+      />
+
+      <InputFormItem
+              name={'payForm'}
+      schema={billingsFields}
 
       />
 
@@ -152,4 +176,4 @@ const EventsForm = (props) => {
         return renderForm();
         }
 
-export default EventsForm;
+export default BillingsForm;

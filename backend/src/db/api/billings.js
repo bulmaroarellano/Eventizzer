@@ -7,22 +7,17 @@ const Utils = require('../utils');
 const Sequelize = db.Sequelize;
 const Op = Sequelize.Op;
 
-module.exports = class EventsDBApi {
+module.exports = class BillingsDBApi {
 
   static async create(data, options) {
   const currentUser = (options && options.currentUser) || { id: null };
   const transaction = (options && options.transaction) || undefined;
 
-  const events = await db.events.create(
+  const billings = await db.billings.create(
   {
   id: data.id || undefined,
 
-    date: data.date
-    ||
-    null
-,
-
-    name: data.name
+    product: data.product
     ||
     null
 ,
@@ -32,7 +27,32 @@ module.exports = class EventsDBApi {
     null
 ,
 
-    address: data.address
+    amount: data.amount
+    ||
+    null
+,
+
+    subtotal: data.subtotal
+    ||
+    null
+,
+
+    iva: data.iva
+    ||
+    null
+,
+
+    discount: data.discount
+    ||
+    null
+,
+
+    total: data.total
+    ||
+    null
+,
+
+    payForm: data.payForm
     ||
     null
 ,
@@ -44,30 +64,25 @@ module.exports = class EventsDBApi {
   { transaction },
   );
 
-    await events.setBillingId(data.billingId || null, {
+    await billings.setClient(data.client || null, {
     transaction,
     });
 
-  return events;
+  return billings;
   }
 
   static async update(id, data, options) {
     const currentUser = (options && options.currentUser) || {id: null};
     const transaction = (options && options.transaction) || undefined;
 
-    const events = await db.events.findByPk(id, {
+    const billings = await db.billings.findByPk(id, {
       transaction,
     });
 
-    await events.update(
+    await billings.update(
       {
 
-        date: data.date
-        ||
-        null
-,
-
-        name: data.name
+        product: data.product
         ||
         null
 ,
@@ -77,7 +92,32 @@ module.exports = class EventsDBApi {
         null
 ,
 
-        address: data.address
+        amount: data.amount
+        ||
+        null
+,
+
+        subtotal: data.subtotal
+        ||
+        null
+,
+
+        iva: data.iva
+        ||
+        null
+,
+
+        discount: data.discount
+        ||
+        null
+,
+
+        total: data.total
+        ||
+        null
+,
+
+        payForm: data.payForm
         ||
         null
 ,
@@ -87,47 +127,47 @@ module.exports = class EventsDBApi {
       {transaction},
     );
 
-    await events.setBillingId(data.billingId || null, {
+    await billings.setClient(data.client || null, {
       transaction,
     });
 
-    return events;
+    return billings;
   }
 
   static async remove(id, options) {
     const currentUser = (options && options.currentUser) || {id: null};
     const transaction = (options && options.transaction) || undefined;
 
-    const events = await db.events.findByPk(id, options);
+    const billings = await db.billings.findByPk(id, options);
 
-    await events.update({
+    await billings.update({
       deletedBy: currentUser.id
     }, {
       transaction,
     });
 
-    await events.destroy({
+    await billings.destroy({
       transaction
     });
 
-    return events;
+    return billings;
   }
 
   static async findBy(where, options) {
     const transaction = (options && options.transaction) || undefined;
 
-    const events = await db.events.findOne(
+    const billings = await db.billings.findOne(
       { where },
       { transaction },
     );
 
-    if (!events) {
-      return events;
+    if (!billings) {
+      return billings;
     }
 
-    const output = events.get({plain: true});
+    const output = billings.get({plain: true});
 
-    output.billingId = await events.getBillingId({
+    output.client = await billings.getClient({
       transaction
     });
 
@@ -148,8 +188,8 @@ module.exports = class EventsDBApi {
     let include = [
 
       {
-        model: db.billings,
-        as: 'billingId',
+        model: db.customers,
+        as: 'client',
       },
 
     ];
@@ -162,50 +202,26 @@ module.exports = class EventsDBApi {
         };
       }
 
-      if (filter.name) {
+      if (filter.product) {
         where = {
           ...where,
           [Op.and]: Utils.ilike(
-            'events',
-            'name',
-            filter.name,
+            'billings',
+            'product',
+            filter.product,
           ),
         };
       }
 
-      if (filter.address) {
+      if (filter.payForm) {
         where = {
           ...where,
           [Op.and]: Utils.ilike(
-            'events',
-            'address',
-            filter.address,
+            'billings',
+            'payForm',
+            filter.payForm,
           ),
         };
-      }
-
-      if (filter.dateRange) {
-        const [start, end] = filter.dateRange;
-
-        if (start !== undefined && start !== null && start !== '') {
-          where = {
-            ...where,
-            date: {
-              ...where.date,
-              [Op.gte]: start,
-            },
-          };
-        }
-
-        if (end !== undefined && end !== null && end !== '') {
-          where = {
-            ...where,
-            date: {
-              ...where.date,
-              [Op.lte]: end,
-            },
-          };
-        }
       }
 
       if (filter.priceRange) {
@@ -232,6 +248,126 @@ module.exports = class EventsDBApi {
         }
       }
 
+      if (filter.amountRange) {
+        const [start, end] = filter.amountRange;
+
+        if (start !== undefined && start !== null && start !== '') {
+          where = {
+            ...where,
+            amount: {
+              ...where.amount,
+              [Op.gte]: start,
+            },
+          };
+        }
+
+        if (end !== undefined && end !== null && end !== '') {
+          where = {
+            ...where,
+            amount: {
+              ...where.amount,
+              [Op.lte]: end,
+            },
+          };
+        }
+      }
+
+      if (filter.subtotalRange) {
+        const [start, end] = filter.subtotalRange;
+
+        if (start !== undefined && start !== null && start !== '') {
+          where = {
+            ...where,
+            subtotal: {
+              ...where.subtotal,
+              [Op.gte]: start,
+            },
+          };
+        }
+
+        if (end !== undefined && end !== null && end !== '') {
+          where = {
+            ...where,
+            subtotal: {
+              ...where.subtotal,
+              [Op.lte]: end,
+            },
+          };
+        }
+      }
+
+      if (filter.ivaRange) {
+        const [start, end] = filter.ivaRange;
+
+        if (start !== undefined && start !== null && start !== '') {
+          where = {
+            ...where,
+            iva: {
+              ...where.iva,
+              [Op.gte]: start,
+            },
+          };
+        }
+
+        if (end !== undefined && end !== null && end !== '') {
+          where = {
+            ...where,
+            iva: {
+              ...where.iva,
+              [Op.lte]: end,
+            },
+          };
+        }
+      }
+
+      if (filter.discountRange) {
+        const [start, end] = filter.discountRange;
+
+        if (start !== undefined && start !== null && start !== '') {
+          where = {
+            ...where,
+            discount: {
+              ...where.discount,
+              [Op.gte]: start,
+            },
+          };
+        }
+
+        if (end !== undefined && end !== null && end !== '') {
+          where = {
+            ...where,
+            discount: {
+              ...where.discount,
+              [Op.lte]: end,
+            },
+          };
+        }
+      }
+
+      if (filter.totalRange) {
+        const [start, end] = filter.totalRange;
+
+        if (start !== undefined && start !== null && start !== '') {
+          where = {
+            ...where,
+            total: {
+              ...where.total,
+              [Op.gte]: start,
+            },
+          };
+        }
+
+        if (end !== undefined && end !== null && end !== '') {
+          where = {
+            ...where,
+            total: {
+              ...where.total,
+              [Op.lte]: end,
+            },
+          };
+        }
+      }
+
       if (
         filter.active === true ||
         filter.active === 'true' ||
@@ -246,14 +382,14 @@ module.exports = class EventsDBApi {
         };
       }
 
-      if (filter.billingId) {
-        var listItems = filter.billingId.split('|').map(item => {
+      if (filter.client) {
+        var listItems = filter.client.split('|').map(item => {
           return  Utils.uuid(item)
         });
 
         where = {
           ...where,
-          billingIdId: {[Op.or]: listItems}
+          clientId: {[Op.or]: listItems}
         };
       }
 
@@ -282,7 +418,7 @@ module.exports = class EventsDBApi {
       }
     }
 
-    let { rows, count } = await db.events.findAndCountAll(
+    let { rows, count } = await db.billings.findAndCountAll(
       {
         where,
         include,
@@ -311,24 +447,24 @@ module.exports = class EventsDBApi {
         [Op.or]: [
           { ['id']: Utils.uuid(query) },
           Utils.ilike(
-            'events',
-            'billingId',
+            'billings',
+            'client',
             query,
           ),
         ],
       };
     }
 
-    const records = await db.events.findAll({
-      attributes: [ 'id', 'billingId' ],
+    const records = await db.billings.findAll({
+      attributes: [ 'id', 'client' ],
       where,
       limit: limit ? Number(limit) : undefined,
-      orderBy: [['billingId', 'ASC']],
+      orderBy: [['client', 'ASC']],
     });
 
     return records.map((record) => ({
       id: record.id,
-      label: record.billingId,
+      label: record.client,
     }));
   }
 

@@ -1,8 +1,8 @@
 
 const express = require('express');
 
-const EventsService = require('../services/events');
-const EventsDBApi = require('../db/api/events');
+const BillingsService = require('../services/billings');
+const BillingsDBApi = require('../db/api/billings');
 const wrapAsync = require('../helpers').wrapAsync;
 
 const router = express.Router();
@@ -11,18 +11,33 @@ const router = express.Router();
  *  @swagger
  *  components:
  *    schemas:
- *      Events:
+ *      Billings:
  *        type: object
  *        properties:
 
- *          name:
+ *          product:
  *            type: string
- *            default: name
- *          address:
+ *            default: product
+ *          payForm:
  *            type: string
- *            default: address
+ *            default: payForm
 
  *          price:
+ *            type: integer
+ *            format: int64
+ *          amount:
+ *            type: integer
+ *            format: int64
+ *          subtotal:
+ *            type: integer
+ *            format: int64
+ *          iva:
+ *            type: integer
+ *            format: int64
+ *          discount:
+ *            type: integer
+ *            format: int64
+ *          total:
  *            type: integer
  *            format: int64
 
@@ -31,17 +46,17 @@ const router = express.Router();
 /**
  *  @swagger
  * tags:
- *   name: Events
- *   description: The Events managing API
+ *   name: Billings
+ *   description: The Billings managing API
  */
 
   /**
   *  @swagger
-  *  /api/events:
+  *  /api/billings:
   *    post:
   *      security:
   *        - bearerAuth: []
-  *      tags: [Events]
+  *      tags: [Billings]
   *      summary: Add new item
   *      description: Add new item
   *      requestBody:
@@ -53,14 +68,14 @@ const router = express.Router();
   *                data:
   *                  description: Data of the updated item
   *                  type: object
-  *                  $ref: "#/components/schemas/Events"
+  *                  $ref: "#/components/schemas/Billings"
   *      responses:
   *        200:
   *          description: The item was successfully added
   *          content:
   *            application/json:
   *              schema:
-  *                $ref: "#/components/schemas/Events"
+  *                $ref: "#/components/schemas/Billings"
   *        401:
   *          $ref: "#/components/responses/UnauthorizedError"
   *        405:
@@ -70,18 +85,18 @@ const router = express.Router();
   */
 
 router.post('/', async (req, res) => {
-    await EventsService.create(req.body.data, req.currentUser, true, req.headers.referer);
+    await BillingsService.create(req.body.data, req.currentUser, true, req.headers.referer);
     const payload = true;
     res.status(200).send(payload);
 });
 
   /**
   *  @swagger
-  *  /api/events/{id}:
+  *  /api/billings/{id}:
   *    put:
   *      security:
   *        - bearerAuth: []
-  *      tags: [Events]
+  *      tags: [Billings]
   *      summary: Update the data of the selected item
   *      description: Update the data of the selected item
   *      parameters:
@@ -104,7 +119,7 @@ router.post('/', async (req, res) => {
   *                data:
   *                  description: Data of the updated item
   *                  type: object
-  *                  $ref: "#/components/schemas/Events"
+  *                  $ref: "#/components/schemas/Billings"
   *              required:
   *                - id
   *      responses:
@@ -113,7 +128,7 @@ router.post('/', async (req, res) => {
   *          content:
   *            application/json:
   *              schema:
-  *                $ref: "#/components/schemas/Events"
+  *                $ref: "#/components/schemas/Billings"
   *        400:
   *          description: Invalid ID supplied
   *        401:
@@ -125,18 +140,18 @@ router.post('/', async (req, res) => {
   */
 
 router.put('/:id', wrapAsync(async (req, res) => {
-  await EventsService.update(req.body.data, req.body.id, req.currentUser);
+  await BillingsService.update(req.body.data, req.body.id, req.currentUser);
   const payload = true;
   res.status(200).send(payload);
 }));
 
   /**
   * @swagger
-  *  /api/events/{id}:
+  *  /api/billings/{id}:
   *    delete:
   *      security:
   *        - bearerAuth: []
-  *      tags: [Events]
+  *      tags: [Billings]
   *      summary: Delete the selected item
   *      description: Delete the selected item
   *      parameters:
@@ -152,7 +167,7 @@ router.put('/:id', wrapAsync(async (req, res) => {
   *          content:
   *            application/json:
   *              schema:
-  *                $ref: "#/components/schemas/Events"
+  *                $ref: "#/components/schemas/Billings"
   *        400:
   *          description: Invalid ID supplied
   *        401:
@@ -164,29 +179,29 @@ router.put('/:id', wrapAsync(async (req, res) => {
   */
 
 router.delete('/:id', wrapAsync(async (req, res) => {
-  await EventsService.remove(req.params.id, req.currentUser);
+  await BillingsService.remove(req.params.id, req.currentUser);
   const payload = true;
   res.status(200).send(payload);
 }));
 
   /**
   *  @swagger
-  *  /api/events:
+  *  /api/billings:
   *    get:
   *      security:
   *        - bearerAuth: []
-  *      tags: [Events]
-  *      summary: Get all events
-  *      description: Get all events
+  *      tags: [Billings]
+  *      summary: Get all billings
+  *      description: Get all billings
   *      responses:
   *        200:
-  *          description: Events list successfully received
+  *          description: Billings list successfully received
   *          content:
   *            application/json:
   *              schema:
   *                type: array
   *                items:
-  *                  $ref: "#/components/schemas/Events"
+  *                  $ref: "#/components/schemas/Billings"
   *        401:
   *          $ref: "#/components/responses/UnauthorizedError"
   *        404:
@@ -196,7 +211,7 @@ router.delete('/:id', wrapAsync(async (req, res) => {
   */
 
 router.get('/', wrapAsync(async (req, res) => {
-  const payload = await EventsDBApi.findAll(
+  const payload = await BillingsDBApi.findAll(
     req.query,
   );
 
@@ -204,7 +219,7 @@ router.get('/', wrapAsync(async (req, res) => {
 }));
 
 router.get('/autocomplete', async (req, res) => {
-  const payload = await EventsDBApi.findAllAutocomplete(
+  const payload = await BillingsDBApi.findAllAutocomplete(
     req.query.query,
     req.query.limit,
   );
@@ -214,11 +229,11 @@ router.get('/autocomplete', async (req, res) => {
 
   /**
   * @swagger
-  *  /api/events/{id}:
+  *  /api/billings/{id}:
   *    get:
   *      security:
   *        - bearerAuth: []
-  *      tags: [Events]
+  *      tags: [Billings]
   *      summary: Get selected item
   *      description: Get selected item
   *      parameters:
@@ -234,7 +249,7 @@ router.get('/autocomplete', async (req, res) => {
   *          content:
   *            application/json:
   *              schema:
-  *                $ref: "#/components/schemas/Events"
+  *                $ref: "#/components/schemas/Billings"
   *        400:
   *          description: Invalid ID supplied
   *        401:
@@ -246,7 +261,7 @@ router.get('/autocomplete', async (req, res) => {
   */
 
 router.get('/:id', wrapAsync(async (req, res) => {
-  const payload = await EventsDBApi.findBy(
+  const payload = await BillingsDBApi.findBy(
     { id: req.params.id },
   );
 

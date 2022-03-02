@@ -57,14 +57,14 @@ function listFormatter(cell) {
               <a
                 href={value.id}
               >
-                {value.billingId}
+                {value.client}
               </a>
             </div>
           );
         })}
         { cell &&
             <div key={cell.id}>
-              <a href={cell.id}>{cell.billingId}</a>
+              <a href={cell.id}>{cell.client}</a>
             </div>
         }
       </div>
