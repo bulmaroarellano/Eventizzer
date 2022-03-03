@@ -11,6 +11,7 @@ WORKDIR /app
 COPY backend/package.json backend/yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY backend .
+
 COPY --from=builder /app/build /app/public
 CMD ["yarn", "start"]
 
