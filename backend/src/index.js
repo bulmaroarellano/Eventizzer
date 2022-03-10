@@ -37,8 +37,8 @@ const options = {
     openapi: "3.0.0",
       info: {
         version: "1.0.0",
-        title: "myapp",
-        description: "myapp Online REST API for Testing and Prototyping application. You can perform all major operations with your entities - create, delete and etc.",
+        title: "Eventizzer",
+        description: "Eventizzer Online REST API for Testing and Prototyping application. You can perform all major operations with your entities - create, delete and etc.",
       },
     servers: [
       {

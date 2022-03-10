@@ -1,5 +1,5 @@
 
-#myapp - template backend,
+#Eventizzer - template backend,
 
 #### Run App on local machine:
 
@@ -30,10 +30,10 @@
   - `psql postgres -U admin`
 
 - Type this command to creating a new database.
-  - `postgres=> CREATE DATABASE db_myapp;`
+  - `postgres=> CREATE DATABASE db_eventizzer;`
 
 - Then give that new user privileges to the new database then quit the `psql`.
-  - `postgres=> GRANT ALL PRIVILEGES ON DATABASE db_myapp TO admin;`
+  - `postgres=> GRANT ALL PRIVILEGES ON DATABASE db_eventizzer TO admin;`
   - `postgres=> \q`
 
 ------------

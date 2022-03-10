@@ -1,6 +1,6 @@
 {
-  "name": "myapp",
-  "description": "myapp - template backend",
+  "name": "eventizzer",
+  "description": "Eventizzer - template backend",
   "version": "1.0.0",
   "private": true,
   "homepage": "./",
