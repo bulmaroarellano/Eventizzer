@@ -1,3 +1,4 @@
+
 import auth from 'reducers/auth';
 import alerts from 'reducers/auth';
 import navigation from 'reducers/navigation';
@@ -5,9 +6,23 @@ import layout from 'reducers/layout';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
-import users from 'reducers/users/usersReducers';
+import billings from 'reducers/billings/billingsReducers';
 
-import vacancies from 'reducers/vacancies/vacanciesReducers';
+import menu from 'reducers/menu/menuReducers';
+
+import orders from 'reducers/orders/ordersReducers';
+
+import administrator from 'reducers/administrator/administratorReducers';
+
+import companies from 'reducers/companies/companiesReducers';
+
+import customers from 'reducers/customers/customersReducers';
+
+import employes from 'reducers/employes/employesReducers';
+
+import events from 'reducers/events/eventsReducers';
+
+import users from 'reducers/users/usersReducers';
 
 export default (history) =>
   combineReducers({
@@ -17,7 +32,23 @@ export default (history) =>
     auth,
     navigation,
 
+    billings,
+
+    menu,
+
+    orders,
+
+    administrator,
+
+    companies,
+
+    customers,
+
+    employes,
+
+    events,
+
     users,
 
-    vacancies,
   });
+
