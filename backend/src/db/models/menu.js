@@ -24,11 +24,6 @@ itemPrice: {
 
       },
 
-description: {
-        type: DataTypes.TEXT,
-
-      },
-
 available: {
         type: DataTypes.BOOLEAN,
 

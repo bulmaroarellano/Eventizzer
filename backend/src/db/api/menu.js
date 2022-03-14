@@ -27,11 +27,6 @@ module.exports = class MenuDBApi {
     null
 ,
 
-    description: data.description
-    ||
-    null
-,
-
     available: data.available
     ||
     false
@@ -65,11 +60,6 @@ module.exports = class MenuDBApi {
 ,
 
         itemPrice: data.itemPrice
-        ||
-        null
-,
-
-        description: data.description
         ||
         null
 ,
@@ -154,17 +144,6 @@ module.exports = class MenuDBApi {
             'menu',
             'name',
             filter.name,
-          ),
-        };
-      }
-
-      if (filter.description) {
-        where = {
-          ...where,
-          [Op.and]: Utils.ilike(
-            'menu',
-            'description',
-            filter.description,
           ),
         };
       }

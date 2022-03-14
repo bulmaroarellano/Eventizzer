@@ -10,10 +10,6 @@ const menuFields = {
 
     },
 
-    description: { type: 'string', label: 'Description',
-
-    },
-
     available: { type: 'boolean', label: 'Available',
 
     },

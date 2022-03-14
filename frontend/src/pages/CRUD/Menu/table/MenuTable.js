@@ -31,16 +31,15 @@ import {useHistory} from 'react-router';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css'
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import Widget from 'components/Widget';
-
-const { SearchBar } = Search;
+import Search from 'components/Search';
 
 const MenuTable = () => {
   const [filters, setFilters] = React.useState([
-    {label: 'Name', title: 'name'},{label: 'Description', title: 'description'},
+    {label: 'Name', title: 'name'},
 
     {label: 'ItemPrice', title: 'itemPrice', number: 'true'},
 
@@ -105,12 +104,6 @@ text: "Name"
 sort: true,
 
 text: "ItemPrice"
-},
-
-{ dataField: "description",
-sort: true,
-
-text: "Description"
 },
 
 { dataField: "available",
@@ -343,7 +336,7 @@ Clear
 <ToolkitProvider columns={columns} data={rows} keyField="id" search>
         {(props) => (
 <>
-<SearchBar className="react-bootstrap-table-search-input" {...props.searchProps} />
+<Search />
 <BootstrapTable
         bordered={false}
 classes={`table-striped table-hover mt-4 ${width < 1150 ? 'table-responsive' : ''}`}

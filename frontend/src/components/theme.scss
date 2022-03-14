@@ -58,3 +58,11 @@
   margin: 8px -1px 10px 10px!important;
   color: #ccc;
 }
+
+.form-control:focus {
+  background-color: transparent !important;
+}
+
+.form-control {
+  background-color: transparent !important;
+}

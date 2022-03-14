@@ -87,12 +87,6 @@ const MenuForm = (props) => {
 
       />
 
-      <InputFormItem
-              name={'description'}
-      schema={menuFields}
-
-      />
-
       <SwitchFormItem
               name={'available'}
       schema={menuFields}

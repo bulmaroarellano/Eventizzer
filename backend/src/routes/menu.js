@@ -18,9 +18,6 @@ const router = express.Router();
  *          name:
  *            type: string
  *            default: name
- *          description:
- *            type: string
- *            default: description
 
  *          itemPrice:
  *            type: integer
