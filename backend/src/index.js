@@ -16,8 +16,6 @@ const fileRoutes = require('./routes/file');
 
 const billingsRoutes = require('./routes/billings');
 
-const menuRoutes = require('./routes/menu');
-
 const ordersRoutes = require('./routes/orders');
 
 const administratorRoutes = require('./routes/administrator');
@@ -82,8 +80,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/file', fileRoutes);
 
 app.use('/api/billings', passport.authenticate('jwt', {session: false}), billingsRoutes);
-
-app.use('/api/menu', passport.authenticate('jwt', {session: false}), menuRoutes);
 
 app.use('/api/orders', passport.authenticate('jwt', {session: false}), ordersRoutes);
 

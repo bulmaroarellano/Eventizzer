@@ -29,8 +29,6 @@ import Widget from 'components/Widget';
 
 import CustomersSelectItem from 'pages/CRUD/Customers/helpers/CustomersSelectItem';
 
-import MenuSelectItem from 'pages/CRUD/Menu/helpers/MenuSelectItem';
-
 const OrdersForm = (props) => {
 
   const {
@@ -95,13 +93,6 @@ const OrdersForm = (props) => {
 
       <CustomersSelectItem
       name={'customer'}
-      schema={ordersFields}
-      showCreate={!modal}
-      form={form}
-      />
-
-      <MenuSelectItem
-      name={'product'}
       schema={ordersFields}
       showCreate={!modal}
       form={form}

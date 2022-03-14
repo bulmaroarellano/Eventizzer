@@ -49,11 +49,6 @@ totalPrice: {
       constraints: false,
     });
 
-    db.orders.belongsTo(db.menu, {
-      as: 'product',
-      constraints: false,
-    });
-
     db.orders.belongsTo(db.users, {
       as: 'createdBy',
     });

@@ -36,10 +36,6 @@ import BillingsFormPage from 'pages/CRUD/Billings/form/BillingsFormPage';
 import BillingsTablePage from 'pages/CRUD/Billings/table/BillingsTablePage';
 import BillingsViewPage from 'pages/CRUD/Billings/page/BillingsViewPage';
 
-import MenuFormPage from 'pages/CRUD/Menu/form/MenuFormPage';
-import MenuTablePage from 'pages/CRUD/Menu/table/MenuTablePage';
-import MenuViewPage from 'pages/CRUD/Menu/page/MenuViewPage';
-
 import OrdersFormPage from 'pages/CRUD/Orders/form/OrdersFormPage';
 import OrdersTablePage from 'pages/CRUD/Orders/table/OrdersTablePage';
 import OrdersViewPage from 'pages/CRUD/Orders/page/OrdersViewPage';
@@ -101,11 +97,6 @@ function Layout(props) {
                     <Route path={"/admin/billings/new"} exact component={BillingsFormPage} />
                     <Route path={"/admin/billings/:id/edit"} exact component={BillingsFormPage} />
                     <Route path={"/admin/billings/:id"} exact component={BillingsViewPage} />
-
-                    <Route path={"/admin/menu"} exact component={MenuTablePage} />
-                    <Route path={"/admin/menu/new"} exact component={MenuFormPage} />
-                    <Route path={"/admin/menu/:id/edit"} exact component={MenuFormPage} />
-                    <Route path={"/admin/menu/:id"} exact component={MenuViewPage} />
 
                     <Route path={"/admin/orders"} exact component={OrdersTablePage} />
                     <Route path={"/admin/orders/new"} exact component={OrdersFormPage} />

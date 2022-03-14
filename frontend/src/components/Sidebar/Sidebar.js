@@ -119,15 +119,6 @@ function Sidebar({ location, structure }) {
           />
 
           <SidebarLink
-            label="Menu"
-            link="/admin/menu"
-            location={location}
-            isSidebarOpened={!isPermanent ? !isSidebarOpened : isSidebarOpened}
-            icon={<CoreIcon />}
-            toggleDrawer={toggleDrawer(true)}
-          />
-
-          <SidebarLink
             label="Orders"
             link="/admin/orders"
             location={location}

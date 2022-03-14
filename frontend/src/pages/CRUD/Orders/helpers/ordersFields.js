@@ -18,10 +18,6 @@ const ordersFields = {
 
     },
 
-    product: { type: 'relation_one', label: 'Product',
-
-    },
-
 }
 
 export default ordersFields;

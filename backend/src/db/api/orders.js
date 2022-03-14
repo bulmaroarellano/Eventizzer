@@ -43,10 +43,6 @@ module.exports = class OrdersDBApi {
     transaction,
     });
 
-    await orders.setProduct(data.product || null, {
-    transaction,
-    });
-
   return orders;
   }
 
@@ -82,10 +78,6 @@ module.exports = class OrdersDBApi {
     );
 
     await orders.setCustomer(data.customer || null, {
-      transaction,
-    });
-
-    await orders.setProduct(data.product || null, {
       transaction,
     });
 
@@ -129,10 +121,6 @@ module.exports = class OrdersDBApi {
       transaction
     });
 
-    output.product = await orders.getProduct({
-      transaction
-    });
-
     return output;
   }
 
@@ -152,11 +140,6 @@ module.exports = class OrdersDBApi {
       {
         model: db.customers,
         as: 'customer',
-      },
-
-      {
-        model: db.menu,
-        as: 'product',
       },
 
     ];
@@ -263,17 +246,6 @@ module.exports = class OrdersDBApi {
         where = {
           ...where,
           customerId: {[Op.or]: listItems}
-        };
-      }
-
-      if (filter.product) {
-        var listItems = filter.product.split('|').map(item => {
-          return  Utils.uuid(item)
-        });
-
-        where = {
-          ...where,
-          productId: {[Op.or]: listItems}
         };
       }
 

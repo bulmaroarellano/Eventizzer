@@ -3,8 +3,6 @@ import * as dataFormat from 'pages/CRUD/Orders/table/OrdersDataFormatters';
 
 // eslint-disable-next-line
 import * as customersDataFormat from 'pages/CRUD/Customers/table/CustomersDataFormatters';
-// eslint-disable-next-line
-import * as menuDataFormat from 'pages/CRUD/Menu/table/MenuDataFormatters';
 
 import actions from 'actions/orders/ordersListActions';
 import React, { Component } from 'react';
@@ -47,7 +45,7 @@ const OrdersTable = () => {
 
     {label: 'Quantity', title: 'quantity', number: 'true'},{label: 'TotalPrice', title: 'totalPrice', number: 'true'},
     {label: 'Discount', title: 'discount', number: 'true'},
-    {label: 'Customer', title: 'customer'},{label: 'Product', title: 'product'},
+    {label: 'Customer', title: 'customer'},
   ]);
   const [filterItems, setFilterItems] = React.useState([]);
   const [currPage, setCurrPage] = React.useState(1);
@@ -123,14 +121,6 @@ sort: true,
   formatter: customersDataFormat.listFormatter,
 
 text: "Customer"
-},
-
-{ dataField: "product",
-sort: true,
-
-  formatter: menuDataFormat.listFormatter,
-
-text: "Product"
 },
 
         {

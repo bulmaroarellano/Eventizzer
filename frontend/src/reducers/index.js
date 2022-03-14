@@ -8,8 +8,6 @@ import { connectRouter } from 'connected-react-router';
 
 import billings from 'reducers/billings/billingsReducers';
 
-import menu from 'reducers/menu/menuReducers';
-
 import orders from 'reducers/orders/ordersReducers';
 
 import administrator from 'reducers/administrator/administratorReducers';
@@ -33,8 +31,6 @@ export default (history) =>
     navigation,
 
     billings,
-
-    menu,
 
     orders,
 
